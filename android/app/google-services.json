@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "488874300444",
+    "project_id": "chatify-udemy-4f3cd",
+    "storage_bucket": "chatify-udemy-4f3cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488874300444:android:e98772074e3f4c62e6fbd9",
+        "android_client_info": {
+          "package_name": "com.example.tsc_chat_app_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488874300444-o54o2vufhv3rffvh7cebeai86dcf3kbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPjEc0lxNfKFIsBfMnpz6pyQZYTZnHQpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488874300444-o54o2vufhv3rffvh7cebeai86dcf3kbo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
