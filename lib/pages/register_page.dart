@@ -41,14 +41,14 @@ class _RegisterPageState extends State<RegisterPage> {
   late AuthenticationProvider _auth;
   late DatabaseService _db;
   late CloudStorageService _cloudStorage;
-  late NavigationService _navigation;
+  // late NavigationService _navigation;
 
   @override
   Widget build(BuildContext context) {
     _auth = Provider.of<AuthenticationProvider>(context);
     _db = GetIt.instance.get<DatabaseService>();
     _cloudStorage = GetIt.instance.get<CloudStorageService>();
-    _navigation = GetIt.instance.get<NavigationService>();
+    // _navigation = GetIt.instance.get<NavigationService>();
 
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
@@ -92,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _profileImageField() {
     return InkWell(
       onTap: () {
-        GetIt.instance.get<MediaService>().pickImageFormLibrary().then(
+        GetIt.instance.get<MediaService>().pickImageFromLibrary().then(
           (file) {
             setState(
               () {

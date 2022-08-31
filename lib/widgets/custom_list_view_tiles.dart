@@ -4,11 +4,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 //Widgets
 import '../widgets/rounded_image_network.dart';
-// import '../widgets/message_bubbles.dart';
+import '../widgets/message_bubbles.dart';
 
 //Models
-// import '../models/chat_message.dart';
-// import '../models/chat_user.dart';
+import '../models/chat_message.dart';
+import '../models/chat_user.dart';
 
 class CustomListViewTile extends StatelessWidget {
   final double height;
@@ -125,6 +125,61 @@ class CustomListViewTileWithActivity extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w400),
             ),
+    );
+  }
+}
+
+class CustomChatListViewTile extends StatelessWidget {
+  final double width;
+  final double deviceHeight;
+  final bool isOwnMessage;
+  final ChatMessage message;
+  final ChatUser sender;
+
+  const CustomChatListViewTile({
+    Key? key,
+    required this.width,
+    required this.deviceHeight,
+    required this.isOwnMessage,
+    required this.message,
+    required this.sender,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 10),
+      width: width,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment:
+            isOwnMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          !isOwnMessage
+              ? RoundedImageNetwork(
+                  // key: UniqueKey(),
+                  imagePath: sender.imageURL,
+                  size: width * 0.08)
+              : Container(),
+          SizedBox(
+            width: width * 0.05,
+          ),
+          message.type == MessageType.TEXT
+              ? TextMessageBubble(
+                  isOwnMessage: isOwnMessage,
+                  message: message,
+                  height: deviceHeight * 0.06,
+                  width: width,
+                )
+              : ImageMessageBubble(
+                  isOwnMessage: isOwnMessage,
+                  message: message,
+                  height: deviceHeight * 0.30,
+                  width: width * 0.55,
+                ),
+        ],
+      ),
     );
   }
 }

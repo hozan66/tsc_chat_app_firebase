@@ -6,7 +6,7 @@ class MediaService {
   MediaService() {}
 
   // Pick image from the device
-  Future<PlatformFile?> pickImageFormLibrary() async {
+  Future<PlatformFile?> pickImageFromLibrary() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(); // type: FileType.image
 

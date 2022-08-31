@@ -8,10 +8,10 @@ import '../providers/authentication_provider.dart';
 import '../providers/chats_page_provider.dart';
 
 //Services
-// import '../services/navigation_service.dart';
+import '../services/navigation_service.dart';
 
 //Pages
-// import '../pages/chat_page.dart';
+import '../pages/chat_page.dart';
 
 //Widgets
 import '../widgets/top_bar.dart';
@@ -35,7 +35,7 @@ class _ChatsPageState extends State<ChatsPage> {
 
   late AuthenticationProvider _auth;
 
-  // late NavigationService _navigation;
+  late NavigationService _navigation;
   late ChatsPageProvider _pageProvider;
 
   @override
@@ -43,7 +43,7 @@ class _ChatsPageState extends State<ChatsPage> {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     _auth = Provider.of<AuthenticationProvider>(context);
-    // _navigation = GetIt.instance.get<NavigationService>();
+    _navigation = GetIt.instance.get<NavigationService>();
 
     return MultiProvider(
       providers: [
@@ -152,7 +152,9 @@ class _ChatsPageState extends State<ChatsPage> {
       imagePath: chat.imageURL(), // 'https://i.pravatar.cc/300'
       isActive: isActive,
       isActivity: chat.activity,
-      onTap: () {},
+      onTap: () {
+        _navigation.navigateToPage(ChatPage(chat: chat));
+      },
     );
   }
 }
