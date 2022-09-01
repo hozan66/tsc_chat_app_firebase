@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 //Widgets
 import '../widgets/top_bar.dart';
 import '../widgets/custom_list_view_tiles.dart';
-import '../widgets/custom_text_form_field.dart';
+import '../widgets/custom_input_fields.dart';
 
 //Models
 import '../models/chat.dart';

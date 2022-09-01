@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Widgets
-import 'package:tsc_chat_app_firebase/widgets/custom_text_form_field.dart';
+import 'package:tsc_chat_app_firebase/widgets/custom_input_fields.dart';
 import '../widgets/rounded_button.dart';
 
 // Providers

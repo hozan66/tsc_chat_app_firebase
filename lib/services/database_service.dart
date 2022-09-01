@@ -41,6 +41,24 @@ class DatabaseService {
     return _database.collection(userCollection).doc(uid).get();
   }
 
+  // Getting all users
+  Future<QuerySnapshot> getUsers({String? name}) {
+    Query query = _database.collection(userCollection);
+    if (name != null) {
+      // We check to see all of users whose name contains
+      // this name stream that gets passed in
+      // and we take all of those users and make another query
+      // on top of that query where we take the existing name that
+      // was passed and we add z to it.
+      // and this return all of the users whose name field contains
+      // the name that was passed to us
+      query = query
+          .where("name", isGreaterThanOrEqualTo: name)
+          .where("name", isLessThanOrEqualTo: "${name}z");
+    }
+    return query.get();
+  }
+
   // Pulling chat data for a specific user from Firestore database
   // QuerySnapshot provided by cloud Firestore
   Stream<QuerySnapshot> getChatsForUser(String uid) {
@@ -116,5 +134,18 @@ class DatabaseService {
     } catch (e) {
       log(e.toString());
     }
+  }
+
+  // Create Chat In Cloud Firestore
+  Future<DocumentReference?> createChat(Map<String, dynamic> data) async {
+    try {
+      // Create a new document inside chats collection
+      DocumentReference chat =
+          await _database.collection(chatCollection).add(data);
+      return chat;
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
   }
 }

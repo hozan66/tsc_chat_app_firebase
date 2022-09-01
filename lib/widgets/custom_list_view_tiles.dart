@@ -38,12 +38,12 @@ class CustomListViewTile extends StatelessWidget {
       onTap: () => onTap(),
       minVerticalPadding: height * 0.20,
       // space between tiles
-      // leading: RoundedImageNetworkWithStatusIndicator(
-      //   key: UniqueKey(),
-      //   size: height / 2,
-      //   imagePath: imagePath,
-      //   isActive: isActive,
-      // ),
+      leading: RoundedImageNetworkWithStatusIndicator(
+        // key: UniqueKey(),
+        size: height / 2,
+        imagePath: imagePath,
+        isActive: isActive,
+      ),
       title: Text(
         title,
         style: const TextStyle(

@@ -14,7 +14,7 @@ import '../services/database_service.dart';
 import 'package:tsc_chat_app_firebase/widgets/rounded_image_network.dart';
 
 import '../providers/authentication_provider.dart';
-import '../widgets/custom_text_form_field.dart';
+import '../widgets/custom_input_fields.dart';
 import '../widgets/rounded_button.dart';
 
 // Providers
