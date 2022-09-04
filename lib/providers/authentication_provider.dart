@@ -55,8 +55,13 @@ class AuthenticationProvider extends ChangeNotifier {
               },
             );
 
+            // Check roles
             log(userModel.toMap().toString());
-            _navigationService.removeAndNavigateToRoute('/home');
+            if (userModel.name == 'admin') {
+              _navigationService.removeAndNavigateToRoute('/admin');
+            } else {
+              _navigationService.removeAndNavigateToRoute('/home');
+            }
           },
         );
       } else {

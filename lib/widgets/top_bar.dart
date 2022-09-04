@@ -40,13 +40,15 @@ class TopBar extends StatelessWidget {
   }
 
   Widget _titleBar() {
-    return Text(
-      barTitle,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: fontSize,
-        fontWeight: FontWeight.w700,
+    return Expanded(
+      child: Text(
+        barTitle,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fontSize,
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }

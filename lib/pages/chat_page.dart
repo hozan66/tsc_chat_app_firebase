@@ -1,8 +1,14 @@
 //Packages
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 //Widgets
+import '../models/chat_user.dart';
+import '../services/database_service.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/custom_list_view_tiles.dart';
 import '../widgets/custom_input_fields.dart';
@@ -36,6 +42,7 @@ class _ChatPageState extends State<ChatPage> {
 
   late GlobalKey<FormState> _messageFormState;
   late ScrollController _messagesListViewController; // To control the list view
+  late DatabaseService _db;
 
   @override
   void initState() {
@@ -49,6 +56,7 @@ class _ChatPageState extends State<ChatPage> {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     _auth = Provider.of<AuthenticationProvider>(context);
+    _db = GetIt.instance.get<DatabaseService>();
 
     return MultiProvider(
       providers: [
@@ -127,17 +135,15 @@ class _ChatPageState extends State<ChatPage> {
             itemBuilder: (BuildContext context, int index) {
               ChatMessage message = _pageProvider.messages![index];
               bool isOwnMessage = message.senderID == _auth.userModel.uid;
-              return Container(
-                child: CustomChatListViewTile(
-                  deviceHeight: _deviceHeight,
-                  width: _deviceWidth * 0.80,
-                  message: message,
-                  isOwnMessage: isOwnMessage,
-                  // If condition is true it will add to the list
-                  sender: widget.chat.members
-                      .where((m) => m.uid == message.senderID)
-                      .first,
-                ),
+              return CustomChatListViewTile(
+                deviceHeight: _deviceHeight,
+                width: _deviceWidth * 0.80,
+                message: message,
+                isOwnMessage: isOwnMessage,
+                // If condition is true it will add to the list
+                sender: widget.chat.members
+                    .where((m) => m.uid == message.senderID)
+                    .first,
               );
             },
           ),
@@ -213,11 +219,29 @@ class _ChatPageState extends State<ChatPage> {
           Icons.send,
           color: Colors.white,
         ),
-        onPressed: () {
+        onPressed: () async {
           if (_messageFormState.currentState!.validate()) {
             _messageFormState.currentState!.save(); // Call onSaved function
             _pageProvider.sendTextMessage();
             _messageFormState.currentState!.reset(); // Clear TextField
+
+            // Store user token
+            // await _db.storeNotificationToken(_auth.userModel.uid);
+
+            // Get receiver id
+            List<ChatUser> recipients = widget.chat.recepients();
+            log(recipients.first.uid);
+
+            // Get receiver token
+            DocumentSnapshot snapshot =
+                await _db.getReceiverInfo(recipients.first.uid);
+            Map<String, dynamic> receiverData =
+                snapshot.data() as Map<String, dynamic>;
+            log(receiverData['token']);
+            String? receiverToken = receiverData['token'];
+
+            // Send the notification
+            _db.sendNotification(widget.chat.title(), receiverToken ?? '');
           }
         },
       ),

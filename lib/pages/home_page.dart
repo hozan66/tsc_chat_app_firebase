@@ -1,9 +1,13 @@
 // Packages
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 //Pages
 import '../pages/chats_page.dart';
 import '../pages/users_page.dart';
+import '../providers/authentication_provider.dart';
+import '../services/database_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,8 +23,16 @@ class _HomePageState extends State<HomePage> {
     const UsersPage(),
   ];
 
+  late AuthenticationProvider _auth;
+  late DatabaseService _databaseService;
+
   @override
   Widget build(BuildContext context) {
+    _auth = Provider.of<AuthenticationProvider>(context);
+    _databaseService = GetIt.instance.get<DatabaseService>();
+    // Store user token
+    _databaseService.storeNotificationToken(_auth.userModel.uid);
+
     return _buildUI();
   }
 

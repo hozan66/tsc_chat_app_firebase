@@ -6,18 +6,17 @@ import 'package:provider/provider.dart';
 
 // Services
 import 'package:tsc_chat_app_firebase/services/media_service.dart';
-import '../services/navigation_service.dart';
+// import '../services/navigation_service.dart';
 import '../services/cloud_storage_service.dart';
 import '../services/database_service.dart';
 
 // Widgets
 import 'package:tsc_chat_app_firebase/widgets/rounded_image_network.dart';
 
+// Providers
 import '../providers/authentication_provider.dart';
 import '../widgets/custom_input_fields.dart';
 import '../widgets/rounded_button.dart';
-
-// Providers
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

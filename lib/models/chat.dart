@@ -9,8 +9,8 @@ class Chat {
   final List<ChatUser> members;
   List<ChatMessage> messages;
 
-  late final List<ChatUser>
-      recipients; // all users but it's not going to include the user who is currently logged in
+  // all users but it's not going to include the user who is currently logged in
+  late final List<ChatUser> recipients;
 
   Chat({
     required this.uid,

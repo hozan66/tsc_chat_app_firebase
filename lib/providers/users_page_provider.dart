@@ -21,7 +21,7 @@ import '../models/chat.dart';
 import '../pages/chat_page.dart';
 
 class UsersPageProvider extends ChangeNotifier {
-  AuthenticationProvider _auth;
+  final AuthenticationProvider _auth;
 
   late DatabaseService _database;
   late NavigationService _navigation;

@@ -164,6 +164,7 @@ class _LoginPageState extends State<LoginPage> {
           log('Email: $_email, Password: $_password');
           _loginFormKey.currentState!.save();
           log('Email: $_email, Password: $_password');
+
           _auth.loginUsingEmailAndPassword(_email!, _password!);
         }
       },

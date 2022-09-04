@@ -25,7 +25,7 @@ class ChatPageProvider extends ChangeNotifier {
   late MediaService _media;
   late NavigationService _navigation;
 
-  AuthenticationProvider _auth;
+  final AuthenticationProvider _auth;
   final ScrollController _messagesListViewController;
 
   final String _chatId;

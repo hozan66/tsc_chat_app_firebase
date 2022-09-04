@@ -11,7 +11,7 @@ const String userCollection = 'Users';
 class CloudStorageService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  CloudStorageService() {}
+  CloudStorageService();
 
   // Save image to cloud storage
   Future<String?> saveUserImageToStorage(

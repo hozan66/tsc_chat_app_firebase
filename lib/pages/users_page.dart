@@ -1,7 +1,7 @@
 //Packages
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:get_it/get_it.dart';
 
 //Providers
 import '../providers/authentication_provider.dart';
@@ -72,7 +72,10 @@ class _UsersPageState extends State<UsersPage> {
                     Icons.logout,
                     color: Color.fromRGBO(0, 82, 218, 1.0),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    // Clear token
+                    await FirebaseMessaging.instance.deleteToken();
+
                     _auth.logout();
                   },
                 ),

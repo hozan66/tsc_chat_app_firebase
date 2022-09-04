@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 
 // Packages
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
 
 //Models
 import '../models/chat_message.dart';
@@ -13,7 +16,7 @@ const String messagesCollection = 'messages';
 class DatabaseService {
   final FirebaseFirestore _database = FirebaseFirestore.instance;
 
-  DatabaseService() {}
+  DatabaseService();
 
   // Create a user
   Future<void> createUser(
@@ -56,6 +59,8 @@ class DatabaseService {
           .where("name", isGreaterThanOrEqualTo: name)
           .where("name", isLessThanOrEqualTo: "${name}z");
     }
+
+    log(name: 'Getting all users', '${query.get()}');
     return query.get();
   }
 
@@ -147,5 +152,70 @@ class DatabaseService {
       log(e.toString());
     }
     return null;
+  }
+
+  // =========================================================
+
+  // We have to create a notification token for our device.
+  // Each token for each device
+  Future<void> storeNotificationToken(String userId) async {
+    String? token = await FirebaseMessaging.instance.getToken();
+
+    // Store my own token to Firestore
+    FirebaseFirestore.instance.collection(userCollection).doc(userId).set(
+      {'token': token},
+      // Make sure to SetOptions to true
+      // otherwise your previous data will get lost.
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<DocumentSnapshot> getReceiverInfo(String receiverId) async {
+    // Get receiver doc from Firestore
+    return FirebaseFirestore.instance
+        .collection(userCollection)
+        .doc(receiverId)
+        .get();
+  }
+
+  // Send notification from our side
+  Future<void> sendNotification(String title, String token) async {
+    // Data about the notification
+    final Map<String, dynamic> data = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK', // Don't miss spelling
+      'id': '1',
+      'status': 'done',
+      'message': title,
+    };
+
+    try {
+      http.Response response =
+          await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+              headers: <String, String>{
+                'Content-Type': 'application/json',
+                'Authorization':
+                    'key=AAAAcdMt1Bw:APA91bEA8Z-Tcqhe6qQEI83YdvX9x9KqIaKhdMbb-1kHG4lRFsRAWYLj2mHZWJmtoRhKS9Le0H8SmeX6j2W3C3OywURTs4Xzj_-zFhse_H_Mq-Ss60Iz9HIyZ_C4Sexiine5EUY0U3EV'
+                // key=ADD-YOUR-SERVER-KEY-HERE
+              },
+              body: jsonEncode(<String, dynamic>{
+                'notification': <String, dynamic>{
+                  'title': title,
+                  'body': 'You are followed by someone!',
+                },
+                'priority': 'high',
+                'data': data,
+                'to': token,
+                // We send the notification to a specific user according to this token
+              }));
+
+      // Checking for the response
+      if (response.statusCode == 200) {
+        log("Yeah notification is send it");
+      } else {
+        log("Error In statusCode");
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }
