@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../pages/chats_page.dart';
 import '../pages/users_page.dart';
 import '../providers/authentication_provider.dart';
+import '../providers/users_page_provider.dart';
 import '../services/database_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +26,9 @@ class _HomePageState extends State<HomePage> {
 
   late AuthenticationProvider _auth;
   late DatabaseService _databaseService;
+  late UsersPageProvider _pageProvider;
+
+  // createChannel(){}
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +72,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // _pageProvider.createChat();
+        },
+        child: const Icon(Icons.chat),
       ),
     );
   }

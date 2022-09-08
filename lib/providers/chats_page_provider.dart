@@ -88,6 +88,7 @@ class ChatsPageProvider extends ChangeNotifier {
                 messages: messages,
                 activity: chatData["is_activity"],
                 group: chatData["is_group"],
+                isJoinChannel: chatData["is_join_channel"],
               );
             },
           ).toList(),

@@ -57,7 +57,10 @@ class AuthenticationProvider extends ChangeNotifier {
 
             // Check roles
             log(userModel.toMap().toString());
-            if (userModel.name == 'admin') {
+            if (userData["role"] == 'admin') {
+              // Subscription to the channel
+              // FirebaseMessaging.instance.subscribeToTopic('subscription');
+
               _navigationService.removeAndNavigateToRoute('/admin');
             } else {
               _navigationService.removeAndNavigateToRoute('/home');

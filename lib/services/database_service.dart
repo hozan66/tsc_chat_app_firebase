@@ -218,4 +218,45 @@ class DatabaseService {
       log(e.toString());
     }
   }
+
+  // Send notification to all admins who subscription to the channel
+  Future<void> sendNotificationToTopic(String title) async {
+    // Data about the notification
+    final Map<String, dynamic> data = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK', // Don't miss spelling
+      'id': '1',
+      'status': 'done',
+      'message': title,
+    };
+
+    try {
+      http.Response response =
+          await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+              headers: <String, String>{
+                'Content-Type': 'application/json',
+                'Authorization':
+                    'key=AAAAcdMt1Bw:APA91bEA8Z-Tcqhe6qQEI83YdvX9x9KqIaKhdMbb-1kHG4lRFsRAWYLj2mHZWJmtoRhKS9Le0H8SmeX6j2W3C3OywURTs4Xzj_-zFhse_H_Mq-Ss60Iz9HIyZ_C4Sexiine5EUY0U3EV'
+                // key=ADD-YOUR-SERVER-KEY-HERE
+              },
+              body: jsonEncode(<String, dynamic>{
+                'notification': <String, dynamic>{
+                  'title': title,
+                  'body': 'You are followed by someone!',
+                },
+                'priority': 'high',
+                'data': data,
+                'to': '/topics/subscription',
+                // Send the notification from channel all subscriptions
+              }));
+
+      // Checking for the response
+      if (response.statusCode == 200) {
+        log("Yeah notification is send from the channel");
+      } else {
+        log("Error In statusCode");
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

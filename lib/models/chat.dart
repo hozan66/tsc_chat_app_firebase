@@ -6,6 +6,7 @@ class Chat {
   final String currentUserUid;
   final bool activity;
   final bool group;
+  final bool isJoinChannel;
   final List<ChatUser> members;
   List<ChatMessage> messages;
 
@@ -19,6 +20,7 @@ class Chat {
     required this.messages,
     required this.activity,
     required this.group,
+    required this.isJoinChannel,
   }) {
     recipients = members.where((i) => i.uid != currentUserUid).toList();
   }

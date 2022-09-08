@@ -116,6 +116,7 @@ class UsersPageProvider extends ChangeNotifier {
           messages: [],
           activity: false,
           group: isGroup,
+          isJoinChannel: false,
         ),
       );
       _selectedUsers = [];
